@@ -6,19 +6,22 @@ import java.util.Properties;
 
 public class CorreoUtil {
 
-    // NOTA: Para que esto funcione en la vida real con Gmail, 
-    // debes usar un correo de Gmail y generar una "Contraseña de Aplicación" en la seguridad de tu cuenta.
-    private static final String REMITENTE = "tucorreo.universidad@gmail.com"; 
-    private static final String CLAVE_APP = "aqui_va_tu_clave_de_aplicacion_de_16_digitos";
+    private static final String REMITENTE = "jpuello169@gmail.com";
+    private static final String CLAVE_APP = "yroyeapcgmsoaodn";
 
     public static boolean enviarCorreo(String destinatario, String asunto, String mensajeCuerpo) {
-        
+
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+        // TIMEOUTS: Para evitar que la app se quede colgada esperando en Render
+        props.put("mail.smtp.connectiontimeout", "3000"); // 3 segundos max para conectar
+        props.put("mail.smtp.timeout", "3000");           // 3 segundos max para responder
+        props.put("mail.smtp.writetimeout", "3000");
 
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
@@ -33,24 +36,20 @@ public class CorreoUtil {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
             message.setSubject(asunto);
             message.setText(mensajeCuerpo);
-            
-            // Simulación en consola por si las credenciales de arriba fallan (muy útil para desarrollo)
+
             System.out.println("----- SIMULACION DE ENVIO DE CORREO -----");
             System.out.println("Para: " + destinatario);
             System.out.println("Asunto: " + asunto);
             System.out.println("Mensaje: " + mensajeCuerpo);
             System.out.println("-----------------------------------------");
 
-            // Intento de envío real. Si falla (por credenciales inválidas), lo capturamos abajo
             Transport.send(message);
             return true;
-            
+
         } catch (MessagingException e) {
-            System.err.println("Error enviando correo real (posible falta de credenciales en CorreoUtil.java)");
+            System.err.println("Error enviando correo real (Bloqueo SMTP o credenciales). Continuando con simulacion.");
             e.printStackTrace();
-            // Retornamos true para no bloquear el flujo de la aplicación en el proyecto académico
-            // si el estudiante no tiene una cuenta de correo real configurada.
-            return true; 
+            return true;
         }
     }
 }
