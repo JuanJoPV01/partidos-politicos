@@ -13,6 +13,7 @@
         <div class="container">
             <span class="navbar-brand">Sistema - Administrador</span>
             <div>
+                <a href="${pageContext.request.contextPath}/ReporteServlet" class="btn btn-outline-warning btn-sm me-2">Ver Reportes</a>
                 <a href="${pageContext.request.contextPath}/PartidoServlet?accion=listar" class="btn btn-outline-info btn-sm me-2">Gestionar Partidos</a>
                 <a href="${pageContext.request.contextPath}/LoginServlet" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
             </div>

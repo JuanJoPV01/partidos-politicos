@@ -129,5 +129,51 @@ public class PartidoPoliticoDAO {
             e.printStackTrace();
             return false;
         }
+    // --- REPORTES PARAMETRIZADOS ---
+    
+    public List<PartidoPolitico> reportePorPais(String pais) {
+        List<PartidoPolitico> lista = new ArrayList<>();
+        String sql = "SELECT * FROM partidos_politicos WHERE LOWER(pais) LIKE LOWER(?) ORDER BY nombre ASC";
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, "%" + pais + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    PartidoPolitico p = new PartidoPolitico();
+                    p.setId(rs.getInt("id"));
+                    p.setNombre(rs.getString("nombre"));
+                    p.setPresidente(rs.getString("presidente"));
+                    p.setPais(rs.getString("pais"));
+                    p.setNumCongresistas(rs.getInt("num_congresistas"));
+                    lista.add(p);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<PartidoPolitico> reportePorCongresistas(int minCongresistas) {
+        List<PartidoPolitico> lista = new ArrayList<>();
+        String sql = "SELECT * FROM partidos_politicos WHERE num_congresistas >= ? ORDER BY num_congresistas DESC";
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, minCongresistas);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    PartidoPolitico p = new PartidoPolitico();
+                    p.setId(rs.getInt("id"));
+                    p.setNombre(rs.getString("nombre"));
+                    p.setPresidente(rs.getString("presidente"));
+                    p.setPais(rs.getString("pais"));
+                    p.setNumCongresistas(rs.getInt("num_congresistas"));
+                    lista.add(p);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 }

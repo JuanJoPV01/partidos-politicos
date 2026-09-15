@@ -120,5 +120,50 @@ public class UsuarioDAO {
             e.printStackTrace();
             return false;
         }
+    // --- REPORTES PARAMETRIZADOS ---
+    
+    public List<Usuario> reportePorRol(String rol) {
+        List<Usuario> lista = new ArrayList<>();
+        String sql = "SELECT * FROM usuarios WHERE rol = ? ORDER BY nombre ASC";
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, rol);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId(rs.getInt("id"));
+                    u.setNombre(rs.getString("nombre"));
+                    u.setEmail(rs.getString("email"));
+                    u.setRol(rs.getString("rol"));
+                    lista.add(u);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<Usuario> reporteBusqueda(String texto) {
+        List<Usuario> lista = new ArrayList<>();
+        String sql = "SELECT * FROM usuarios WHERE LOWER(nombre) LIKE LOWER(?) OR LOWER(email) LIKE LOWER(?) ORDER BY id ASC";
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, "%" + texto + "%");
+            ps.setString(2, "%" + texto + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId(rs.getInt("id"));
+                    u.setNombre(rs.getString("nombre"));
+                    u.setEmail(rs.getString("email"));
+                    u.setRol(rs.getString("rol"));
+                    lista.add(u);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 }
