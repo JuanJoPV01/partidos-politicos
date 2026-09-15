@@ -12,7 +12,10 @@
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <span class="navbar-brand">Sistema de Partidos Políticos</span>
-            <a href="${pageContext.request.contextPath}/LoginServlet" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
+            <div>
+                <a href="${pageContext.request.contextPath}/UsuarioServlet?accion=listar" class="btn btn-outline-info btn-sm me-2">Gestionar Usuarios</a>
+                <a href="${pageContext.request.contextPath}/LoginServlet" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
+            </div>
         </div>
     </nav>
 
