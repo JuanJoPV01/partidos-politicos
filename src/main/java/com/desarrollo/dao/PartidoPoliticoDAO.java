@@ -129,6 +129,8 @@ public class PartidoPoliticoDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
     // --- REPORTES PARAMETRIZADOS ---
     
     public List<PartidoPolitico> reportePorPais(String pais) {

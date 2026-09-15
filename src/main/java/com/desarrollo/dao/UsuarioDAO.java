@@ -120,6 +120,8 @@ public class UsuarioDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
     // --- REPORTES PARAMETRIZADOS ---
     
     public List<Usuario> reportePorRol(String rol) {
