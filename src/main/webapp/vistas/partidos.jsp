@@ -24,6 +24,7 @@
                     <div class="card-header bg-primary text-white">Nuevo Partido</div>
                     <div class="card-body">
                         <form action="${pageContext.request.contextPath}/PartidoServlet" method="POST">
+                            <input type="hidden" name="accion" value="agregar">
                             <div class="mb-2">
                                 <label class="form-label small">Nombre</label>
                                 <input type="text" name="nombre" class="form-control form-control-sm" required>
@@ -91,6 +92,7 @@
                                     <th>Presidente</th>
                                     <th>País</th>
                                     <th>Congresistas</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,13 +107,17 @@
                                     <td><%= p.getPresidente() %></td>
                                     <td><%= p.getPais() %></td>
                                     <td><%= p.getNumCongresistas() %></td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/PartidoServlet?accion=editar&id=<%= p.getId() %>" class="btn btn-warning btn-sm">Editar</a>
+                                        <a href="${pageContext.request.contextPath}/PartidoServlet?accion=eliminar&id=<%= p.getId() %>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este partido?');">Eliminar</a>
+                                    </td>
                                 </tr>
                                 <%
                                         }
                                     } else {
                                 %>
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted">No hay partidos registrados</td>
+                                    <td colspan="6" class="text-center text-muted">No hay partidos registrados</td>
                                 </tr>
                                 <% } %>
                             </tbody>

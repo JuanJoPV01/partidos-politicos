@@ -28,6 +28,17 @@ public class PartidoServlet extends HttpServlet {
                 request.setAttribute("partidos", lista);
                 request.getRequestDispatcher("vistas/partidos.jsp").forward(request, response);
                 break;
+            case "editar":
+                int idEditar = Integer.parseInt(request.getParameter("id"));
+                PartidoPolitico p = partidoDAO.obtenerPorId(idEditar);
+                request.setAttribute("partido", p);
+                request.getRequestDispatcher("vistas/editar_partido.jsp").forward(request, response);
+                break;
+            case "eliminar":
+                int idEliminar = Integer.parseInt(request.getParameter("id"));
+                partidoDAO.eliminar(idEliminar);
+                response.sendRedirect("PartidoServlet?accion=listar");
+                break;
             default:
                 response.sendRedirect("PartidoServlet?accion=listar");
                 break;
@@ -39,6 +50,7 @@ public class PartidoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        String accion = request.getParameter("accion");
 
         PartidoPolitico p = new PartidoPolitico();
         p.setNombre(request.getParameter("nombre"));
@@ -53,7 +65,13 @@ public class PartidoServlet extends HttpServlet {
         p.setNumConcejales(Integer.parseInt(request.getParameter("numConcejales")));
         p.setNumCongresistas(Integer.parseInt(request.getParameter("numCongresistas")));
 
-        partidoDAO.agregar(p);
+        if ("actualizar".equals(accion)) {
+            p.setId(Integer.parseInt(request.getParameter("id")));
+            partidoDAO.actualizar(p);
+        } else {
+            partidoDAO.agregar(p);
+        }
+        
         response.sendRedirect("PartidoServlet?accion=listar");
     }
 }
