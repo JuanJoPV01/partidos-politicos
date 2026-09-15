@@ -26,7 +26,11 @@
                         <label class="form-label">Contraseña</label>
                         <input type="password" name="clave" class="form-control" required placeholder="123456">
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                    <button type="submit" class="btn btn-primary w-100 mb-3">Ingresar</button>
+                    
+                    <div class="text-center">
+                        <a href="${pageContext.request.contextPath}/vistas/recuperar.jsp" class="text-decoration-none small">¿Olvidaste tu contraseña?</a>
+                    </div>
                 </form>
             </div>
         </div>

@@ -166,4 +166,26 @@ public class UsuarioDAO {
         }
         return lista;
     }
+
+    public Usuario obtenerPorEmail(String email) {
+        Usuario u = null;
+        String sql = "SELECT * FROM usuarios WHERE email = ?";
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    u = new Usuario();
+                    u.setId(rs.getInt("id"));
+                    u.setNombre(rs.getString("nombre"));
+                    u.setEmail(rs.getString("email"));
+                    u.setClave(rs.getString("clave"));
+                    u.setRol(rs.getString("rol"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
 }
