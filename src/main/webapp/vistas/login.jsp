@@ -17,7 +17,7 @@
                     <div class="alert alert-danger p-2 text-center"><%= error %></div>
                 <% } %>
 
-                <form action="LoginServlet" method="POST">
+               <form action="${pageContext.request.contextPath}/LoginServlet" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Correo Electrónico</label>
                         <input type="email" name="email" class="form-control" required placeholder="admin@correo.com">

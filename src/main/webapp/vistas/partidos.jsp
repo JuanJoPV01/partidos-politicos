@@ -12,7 +12,7 @@
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <span class="navbar-brand">Sistema de Partidos Políticos</span>
-            <a href="LoginServlet" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
+            <a href="${pageContext.request.contextPath}/LoginServlet" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
         </div>
     </nav>
 
@@ -23,7 +23,7 @@
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">Nuevo Partido</div>
                     <div class="card-body">
-                        <form action="PartidoServlet" method="POST">
+                        <form action="${pageContext.request.contextPath}/PartidoServlet" method="POST">
                             <div class="mb-2">
                                 <label class="form-label small">Nombre</label>
                                 <input type="text" name="nombre" class="form-control form-control-sm" required>

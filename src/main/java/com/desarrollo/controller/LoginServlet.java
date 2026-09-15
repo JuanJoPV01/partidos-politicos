@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("PartidoServlet?accion=listar");
         } else {
             request.setAttribute("error", "Credenciales incorrectas");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("vistas/login.jsp").forward(request, response);
         }
     }
 
@@ -41,6 +41,6 @@ public class LoginServlet extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("vistas/login.jsp");
     }
 }
